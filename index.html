@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Study</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h3>Staff</h3>
+
+        <form id="staffForm">
+            <input type="text" name="name" id="name" placeholder="Name" maxlength="255" required>
+            <input type="number" name="age" id="age" placeholder="Age" min="18" max="65" required>
+            <div class="gender">
+                <label for="gender"><input type="radio" name="gender" id="male" value="Male" checked><p>Male</p></label>
+                <label for="gender"><input type="radio" name="gender" id="female" value="Female"><p>Female</p></label>
+            </div>
+            
+            <select name="position" id="position">
+                <option value="Accountant">Accountant</option>
+                <option value="Programmer">Programer</option>
+                <option value="Manager">Manager</option>
+                <option value="Developer">Developer</option>
+            </select>
+            <textarea name="note" rows="5" id="note" placeholder="Note" maxlength="300"></textarea>
+            <button type="submit" class="btn" id="formBtn">Add</button>
+        </form>
+
+        <h3>Staff Table</h3>
+
+        <table id="staffTable">
+            
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Position</th>
+                    <th>Note</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>
+
