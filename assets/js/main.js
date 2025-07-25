@@ -24,9 +24,13 @@
 
 // STT | Mã NV | Họ tên | Tuổi | Giới tính | Vị trí | Ghi chú | Hành động (Sửa / Xoá)
 
+//tạo mảng staffs rỗng
 let staffs = [];
+
+//tạo 1 biến là editingId để biết là mình đang edit hay thêm mới
 let editingId = null;
 
+//lấy các element
 const form = document.querySelector('#staffForm');
 const btn = document.querySelector('#formBtn');
 
@@ -37,18 +41,26 @@ const genderIp = document.querySelector('input[name="gender"]:checked');
 const positionIp = document.querySelector('#position');
 const noteIp = document.querySelector('#note');
 
+
+//hàm add or update để dùng khi thực hiện sự kiện bấm nút
 const addOrUpdate = () => {
+
+    //lấy giá trị của các ô input
     const name = nameIp.value.trim();
     const age = ageIp.value.trim();
     const gender = genderIp.value;
     const position = positionIp.value;
     const note = noteIp.value.trim();
     
+
+    //kiểm tra
     if (!name || !age){
         alert('Input full information of staff!');
         return
     }
     
+
+    //tạo object staffData gồm các giá trị vừa nhập vào
     const staffData = {
         id: editingId ?? Date.now(),
         name,
@@ -58,20 +70,24 @@ const addOrUpdate = () => {
         note,
     }
 
+
+    
     if(editingId === null) {
-        staffs.push(staffData);
+        staffs.push(staffData);  //nếu edittingId = null tức là thêm mới thì push staffData vừa nhập vào mảng staffs
     } else {
-        staffs = staffs.map((s) => (s.id === editingId ? staffData : s));
-        editingId = null;
+        staffs = staffs.map((s) => (s.id === editingId ? staffData : s));  //nếu có editingId thì sẽ map để thay thế thằng có s.id là editingId bằng thằng staffData còn lại giữ nguyên, đây là toán tử ba ngôi, lên mạng search, giống if else nhưng ngắn hơn
+        editingId = null; //sau khi edit xong thì đưa editingId về lại null
     }
-    form.reset();
+    form.reset(); //Sau khi xong việc thì xóa hết những gì đang ghi trên form
     render();
 }
 
 const render = () => {
-    const tbody = document.querySelector('#staffTable tbody');
-    tbody.innerHTML = '';
+    const tbody = document.querySelector('#staffTable tbody');   //select tbody
+    tbody.innerHTML = '';    // cho tbody thành rỗng
 
+
+    //chạy qua từng phần tử của mảng staffs, mỗi phần tử thì tạo 1 row
     staffs.forEach((item,index) => {
         const row = `
             <tr>
@@ -88,14 +104,20 @@ const render = () => {
                 </td>
             </tr>
         `;
+
+        // sau đó thêm vào tbody
         tbody.innerHTML += row;
     })
     btn.textContent = 'Add';
 }
 
 const editStaff = (id) => {
+
+    //tìm thằng staff có id ở chỗ bấm nút edit
     const staff = staffs.find((s) => s.id === id);
     btn.textContent = 'Update';
+
+    // ghi các thông tin của thằng vừa tìm được lên trên form để sửa
     if(staff) {
         editingId = staff.id;
         nameIp.value = staff.name;
@@ -108,6 +130,8 @@ const editStaff = (id) => {
 
 const deleteStaff = (id) => {
     if (confirm('Delete this staff?')) {
+
+        //tạo lại mảng staffs mà không bao gồm phần tử có id này
         staffs = staffs.filter((s) => s.id !== id);
         if (editingId === id){
             editingId = null;
@@ -117,6 +141,7 @@ const deleteStaff = (id) => {
     }
 }
 
+//sự kiện bấm nút ở form
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     addOrUpdate();
